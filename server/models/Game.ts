@@ -73,14 +73,19 @@ export class Game {
     totalQuestions: number;
     timeElapsed?: number;
   } {
-    const status = {
+    const status: {
+      state: GameState;
+      currentQuestion: number;
+      totalQuestions: number;
+      timeElapsed?: number;
+    } = {
       state: this.state,
       currentQuestion: this.currentQuestion,
       totalQuestions: this.totalQuestions,
     };
 
     if (this.startTime && this.state === 'in_progress') {
-      status['timeElapsed'] = Date.now() - this.startTime;
+      status.timeElapsed = Date.now() - this.startTime;
     }
 
     return status;
