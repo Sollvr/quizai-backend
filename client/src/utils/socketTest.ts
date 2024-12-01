@@ -5,13 +5,15 @@ export class SocketTester {
   
   constructor() {
     this.socket = io('http://localhost:5000', {
-      path: '/socket.io/',
-      transports: ['websocket', 'polling'],
+      path: '/socket.io',  // Remove trailing slash
+      transports: ['polling', 'websocket'],  // Try polling first
       autoConnect: false,
       withCredentials: true,
       forceNew: true,
       reconnectionAttempts: 5,
-      timeout: 10000
+      timeout: 10000,
+      reconnection: true,
+      reconnectionDelay: 1000,
     });
 
     // Connection event handlers
