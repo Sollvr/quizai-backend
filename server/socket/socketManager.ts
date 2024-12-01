@@ -37,6 +37,12 @@ export class SocketManager {
     this.io.on('connection', (socket: Socket) => {
       console.log('Client connected:', socket.id);
 
+      // Ping/Pong for connection testing
+      socket.on('ping', (callback) => {
+        console.log('Ping received from:', socket.id);
+        callback({ status: 'pong', timestamp: Date.now() });
+      });
+
       // Lobby Events
       socket.on('create-lobby', (data) => this.lobbyHandlers.handleCreateLobby(socket, data));
       socket.on('join-lobby', (data) => this.lobbyHandlers.handleJoinLobby(socket, data));

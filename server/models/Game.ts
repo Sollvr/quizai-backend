@@ -1,3 +1,5 @@
+export type GameState = 'waiting' | 'starting' | 'in_progress' | 'completed';
+
 export class Game {
   public roomId: string;
   public currentQuestion: number;
@@ -6,6 +8,8 @@ export class Game {
   private scores: Map<string, number[]>;
   private hostId: string;
   private gameMode: 'time-based' | 'independent';
+  private state: GameState = 'waiting';
+  private startTime: number | null = null;
   
   constructor(roomId: string, settings: {
     timeLimit: number;
@@ -52,6 +56,35 @@ export class Game {
       .sort((a, b) => b.totalScore - a.totalScore);
   }
 
+  public getState(): GameState {
+    return this.state;
+  }
+
+  public setState(newState: GameState): void {
+    this.state = newState;
+    if (newState === 'in_progress' && !this.startTime) {
+      this.startTime = Date.now();
+    }
+  }
+
+  public getGameStatus(): {
+    state: GameState;
+    currentQuestion: number;
+    totalQuestions: number;
+    timeElapsed?: number;
+  } {
+    const status = {
+      state: this.state,
+      currentQuestion: this.currentQuestion,
+      totalQuestions: this.totalQuestions,
+    };
+
+    if (this.startTime && this.state === 'in_progress') {
+      status['timeElapsed'] = Date.now() - this.startTime;
+    }
+
+    return status;
+  }
   public isHost(socketId: string): boolean {
     return socketId === this.hostId;
   }

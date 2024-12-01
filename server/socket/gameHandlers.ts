@@ -56,6 +56,29 @@ export class GameHandlers {
   public createGame(roomId: string, settings: any): Game {
     const game = new Game(roomId, settings);
     this.activeGames.set(roomId, game);
+    
+    // Broadcast initial game state
+    this.io.to(roomId).emit('game-state-update', game.getGameStatus());
+    
+    // Start game after a short delay
+    setTimeout(() => {
+      game.setState('starting');
+      this.io.to(roomId).emit('game-state-update', game.getGameStatus());
+      
+      // Move to in_progress after countdown
+      setTimeout(() => {
+        game.setState('in_progress');
+        this.io.to(roomId).emit('game-state-update', game.getGameStatus());
+      }, 3000); // 3 second countdown
+    }, 1000);
+    
     return game;
+  }
+
+  public handleGameStatus(socket: Socket) {
+    const game = this.getGameBySocket(socket);
+    if (!game) return;
+    
+    socket.emit('game-state-update', game.getGameStatus());
   }
 }
