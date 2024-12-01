@@ -15,14 +15,18 @@ function log(message: string) {
 }
 
 const app = express();
+const httpServer = createServer(app);
+
+// Add middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Add CORS middleware for API routes
-app.use('/api', (req, res, next) => {
+// Add CORS middleware for all routes
+app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:3000');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Credentials', 'true');
   
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -61,15 +65,13 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  const server = createServer(app);
-
-  // Move registerRoutes before Vite setup
+  // Use the already created httpServer instance
   console.log('Setting up routes...');
-  registerRoutes(app, server);
+  registerRoutes(app, httpServer);
 
   // Set up Vite middleware after routes in development
   if (app.get("env") === "development") {
-    await setupVite(app, server);
+    await setupVite(app, httpServer);
   } else {
     serveStatic(app);
   }
@@ -90,8 +92,13 @@ app.use((req, res, next) => {
   });
 
   // WebSocket specific error handling
-  server.on('error', (err: Error) => {
+  httpServer.on('error', (err: Error) => {
     log(`WebSocket Server Error: ${err.message}`);
+  });
+
+  // Add explicit upgrade handling for WebSocket connections
+  httpServer.on('upgrade', (request, socket, head) => {
+    log('WebSocket upgrade requested');
   });
 
   // ALWAYS serve the app on port 5000
@@ -100,7 +107,7 @@ app.use((req, res, next) => {
   
   try {
     await new Promise<void>((resolve, reject) => {
-      const httpServer = server.listen(PORT, "0.0.0.0", () => {
+      httpServer.listen(PORT, "0.0.0.0", () => {
         log(`Server running on port ${PORT}`);
         resolve();
       });

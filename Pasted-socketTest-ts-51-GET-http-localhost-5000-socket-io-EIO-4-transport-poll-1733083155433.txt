@@ -1,0 +1,68 @@
+socketTest.ts:51 
+        
+        
+       GET http://localhost:5000/socket.io/?EIO=4&transport=polling&t=0ydmv72j net::ERR_CONNECTION_REFUSED
+_create @ socket__io-client.js?v=6c7d5be8:858
+_Request @ socket__io-client.js?v=6c7d5be8:798
+request @ socket__io-client.js?v=6c7d5be8:953
+doPoll @ socket__io-client.js?v=6c7d5be8:775
+_poll @ socket__io-client.js?v=6c7d5be8:646
+doOpen @ socket__io-client.js?v=6c7d5be8:607
+open @ socket__io-client.js?v=6c7d5be8:503
+_open @ socket__io-client.js?v=6c7d5be8:1328
+_SocketWithoutUpgrade @ socket__io-client.js?v=6c7d5be8:1289
+SocketWithUpgrade @ socket__io-client.js?v=6c7d5be8:1633
+Socket @ socket__io-client.js?v=6c7d5be8:1759
+open @ socket__io-client.js?v=6c7d5be8:3125
+(anonymous) @ socket__io-client.js?v=6c7d5be8:3343
+setTimeout
+reconnect @ socket__io-client.js?v=6c7d5be8:3337
+maybeReconnectOnOpen @ socket__io-client.js?v=6c7d5be8:3112
+onError @ socket__io-client.js?v=6c7d5be8:3141
+Emitter.emit @ socket__io-client.js?v=6c7d5be8:354
+_onError @ socket__io-client.js?v=6c7d5be8:1597
+Emitter.emit @ socket__io-client.js?v=6c7d5be8:354
+onError @ socket__io-client.js?v=6c7d5be8:495
+(anonymous) @ socket__io-client.js?v=6c7d5be8:778
+Emitter.emit @ socket__io-client.js?v=6c7d5be8:354
+_onError @ socket__io-client.js?v=6c7d5be8:876
+(anonymous) @ socket__io-client.js?v=6c7d5be8:854
+setTimeout
+xhr.onreadystatechange @ socket__io-client.js?v=6c7d5be8:853
+XMLHttpRequest.send
+_create @ socket__io-client.js?v=6c7d5be8:858
+_Request @ socket__io-client.js?v=6c7d5be8:798
+request @ socket__io-client.js?v=6c7d5be8:953
+doPoll @ socket__io-client.js?v=6c7d5be8:775
+_poll @ socket__io-client.js?v=6c7d5be8:646
+doOpen @ socket__io-client.js?v=6c7d5be8:607
+open @ socket__io-client.js?v=6c7d5be8:503
+_open @ socket__io-client.js?v=6c7d5be8:1328
+_SocketWithoutUpgrade @ socket__io-client.js?v=6c7d5be8:1289
+SocketWithUpgrade @ socket__io-client.js?v=6c7d5be8:1633
+Socket @ socket__io-client.js?v=6c7d5be8:1759
+open @ socket__io-client.js?v=6c7d5be8:3125
+connect @ socket__io-client.js?v=6c7d5be8:2321
+connect @ socketTest.ts:51
+runSocketTests @ socketTest.ts:81
+handleRunTests @ SocketTest.tsx:35
+callCallback2 @ chunk-WERSD76P.js?v=6c7d5be8:3674
+invokeGuardedCallbackDev @ chunk-WERSD76P.js?v=6c7d5be8:3699
+invokeGuardedCallback @ chunk-WERSD76P.js?v=6c7d5be8:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-WERSD76P.js?v=6c7d5be8:3736
+executeDispatch @ chunk-WERSD76P.js?v=6c7d5be8:7014
+processDispatchQueueItemsInOrder @ chunk-WERSD76P.js?v=6c7d5be8:7034
+processDispatchQueue @ chunk-WERSD76P.js?v=6c7d5be8:7043
+dispatchEventsForPlugins @ chunk-WERSD76P.js?v=6c7d5be8:7051
+(anonymous) @ chunk-WERSD76P.js?v=6c7d5be8:7174
+batchedUpdates$1 @ chunk-WERSD76P.js?v=6c7d5be8:18913
+batchedUpdates @ chunk-WERSD76P.js?v=6c7d5be8:3579
+dispatchEventForPluginEventSystem @ chunk-WERSD76P.js?v=6c7d5be8:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-WERSD76P.js?v=6c7d5be8:5478
+dispatchEvent @ chunk-WERSD76P.js?v=6c7d5be8:5472
+dispatchDiscreteEvent @ chunk-WERSD76P.js?v=6c7d5be8:5449Understand this errorAI
+SocketTest.tsx:21 Connection error: TransportError: xhr poll error
+    at XHR.onError (socket__io-client.js?v=6c7d5be8:495:33)
+    at _Request.<anonymous> (socket__io-client.js?v=6c7d5be8:778:12)
+    at Emitter.emit (socket__io-client.js?v=6c7d5be8:354:20)
+    at _Request._onError (socket__io-client.js?v=6c7d5be8:876:10)
