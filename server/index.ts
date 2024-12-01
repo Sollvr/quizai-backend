@@ -63,15 +63,16 @@ app.use((req, res, next) => {
 (async () => {
   const server = createServer(app);
 
-  // Set up Vite middleware first in development
+  // Move registerRoutes before Vite setup
+  console.log('Setting up routes...');
+  registerRoutes(app, server);
+
+  // Set up Vite middleware after routes in development
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
-
-  // Register routes after Vite setup
-  registerRoutes(app, server);
 
   // Global error handling middleware
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

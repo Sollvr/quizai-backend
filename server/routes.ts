@@ -4,6 +4,7 @@ import { createServer } from 'http';
 import { SocketManager } from './socket/socketManager';
 
 export function registerRoutes(app: Express, httpServer: ReturnType<typeof createServer>) {
+  console.log('Registering routes...');
   // Initialize Socket.IO before routes
   const io = new Server(httpServer, {
     path: '/socket.io/',  // Added trailing slash
