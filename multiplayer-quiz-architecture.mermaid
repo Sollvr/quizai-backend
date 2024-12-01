@@ -1,0 +1,19 @@
+graph TD
+    A[Client/Next.js Frontend] -->|WebSocket| B[WebSocket Server]
+    B -->|Real-time Events| A
+    B -->|Game State| C[Game State Manager]
+    C -->|Update State| B
+    B -->|Player Actions| D[Quiz Logic Handler]
+    D -->|Score Updates| B
+    E[OpenAI API] -->|Quiz Content| D
+    F[(Database)] -->|Store/Retrieve| C
+    
+    subgraph "Game Room Management"
+        C -->|Create/Join/Leave| G[Lobby System]
+        G -->|Room Updates| C
+    end
+    
+    subgraph "Game Modes"
+        D -->|Mode 1: Time-based| H[Synchronized Quiz]
+        D -->|Mode 2: Independent| I[Individual Quiz]
+    end
