@@ -5,9 +5,12 @@ import { SocketManager } from './socket/socketManager';
 
 export function registerRoutes(app: Express, httpServer: ReturnType<typeof createServer>) {
   const io = new Server(httpServer, {
+    path: '/socket.io',
+    transports: ['websocket', 'polling'],
     cors: {
       origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-      methods: ['GET', 'POST']
+      methods: ['GET', 'POST'],
+      credentials: true
     }
   });
 

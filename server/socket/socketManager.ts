@@ -34,8 +34,24 @@ export class SocketManager {
   }
 
   private setupConnectionHandlers() {
+    this.io.engine.on('connection_error', (err) => {
+      console.log('Socket.IO connection error:', {
+        type: err.type,
+        message: err.message,
+        context: err.context
+      });
+    });
+
     this.io.on('connection', (socket: Socket) => {
-      console.log('Client connected:', socket.id);
+      console.log('Client connected:', {
+        id: socket.id,
+        transport: socket.conn.transport.name,
+        handshake: {
+          headers: socket.handshake.headers,
+          query: socket.handshake.query,
+          time: new Date().toISOString()
+        }
+      });
 
       // Ping/Pong for connection testing
       socket.on('ping', (callback) => {
