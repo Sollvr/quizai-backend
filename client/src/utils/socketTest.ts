@@ -8,6 +8,10 @@ export class SocketTester {
       path: '/socket.io/',
       transports: ['websocket', 'polling'],
       autoConnect: false,
+      withCredentials: true,
+      forceNew: true,
+      reconnectionAttempts: 5,
+      timeout: 10000
     });
 
     // Connection event handlers
@@ -21,6 +25,14 @@ export class SocketTester {
 
     this.socket.on('error', (error: any) => {
       console.error('Socket error:', error);
+    });
+
+    this.socket.on('connect_error', (error) => {
+      console.error('Connection error:', error);
+    });
+
+    this.socket.on('connect_timeout', () => {
+      console.error('Connection timeout');
     });
 
     // Game-specific event handlers
