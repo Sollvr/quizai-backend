@@ -17,7 +17,10 @@ function log(message: string) {
 const app = express();
 const httpServer = createServer(app);
 
-// Add middleware
+// Initialize Socket.IO first, before any middleware
+registerRoutes(app, httpServer);  // This contains Socket.IO initialization
+
+// Then add middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

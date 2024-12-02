@@ -7,8 +7,8 @@ export function registerRoutes(app: Express, httpServer: ReturnType<typeof creat
   console.log('Registering routes...');
   // Initialize Socket.IO before routes
   const io = new Server(httpServer, {
-    path: '/socket.io',  // Remove trailing slash
-    transports: ['polling', 'websocket'],  // Try polling first
+    path: '/socket.io',
+    transports: ['websocket', 'polling'],
     cors: {
       origin: process.env.FRONTEND_URL || 'http://localhost:3000',
       methods: ['GET', 'POST', 'OPTIONS'],
@@ -16,22 +16,17 @@ export function registerRoutes(app: Express, httpServer: ReturnType<typeof creat
       allowedHeaders: ['Content-Type', 'Authorization'],
     },
     allowEIO3: true,
-    pingTimeout: 60000,
-    pingInterval: 25000,
+    pingInterval: 10000,
+    pingTimeout: 5000
   });
 
   // Add more detailed connection logging
   io.engine.on('connection_error', (err) => {
-    console.error('Socket.IO connection error:', {
-      type: err.type,
-      message: err.message,
-      context: err.context,
-      req: err.req ? {
-        url: err.req.url,
-        headers: err.req.headers,
-        method: err.req.method,
-      } : null
-    });
+    console.error('Socket.IO connection error:', err);
+  });
+
+  io.on('connection', (socket) => {
+    console.log('Client connected:', socket.id);
   });
 
   // Enable debug mode for Socket.IO
